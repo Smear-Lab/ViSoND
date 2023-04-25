@@ -1,22 +1,36 @@
-#prep work
-# 1)convert files to csv
+"""
+Convert Spikes and Sniffs to MIDI
+Authors: Morgan Brown & Scott Sterrett
+Date: 2023-04-24
+"""
+# %%
+# 1. Imports
+
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.io import loadmat
 import math as math
-
+from mido import Message, MidiFile, MidiTrack
+# %%
+# 2. Load data
 vio=0.1
 mouse_id = '4131' #mouse of interest
 sess = '3'
+# %%
+#load the data from the mat files
+datapath = Path('./data/test')
+# clusters = loadmat(datapath/'cluster_ids.mat')['clusters'].squeeze()
+# i_locs = loadmat(datapath/'in_locs.mat')['i_locs'].squeeze()
+# spike_times = loadmat(datapath/'spike_times.mat')['spikes'].squeeze()
+# # %%
+clusters=np.loadtxt(datapath/'clusters.csv',delimiter=',').astype('int') # spike clusters
+i_locs=np.loadtxt(datapath/'locs.csv',delimiter=',') # inhilation locs
+spike_times=np.loadtxt(datapath/'spike_times.csv',delimiter=',') # spike times
 
-#load the data from the csv files
-clusters=np.loadtxt('clusters.csv',delimiter=',') # spike clusters
-clusters=clusters.astype(int)
-locs=np.loadtxt('locs.csv',delimiter=',') # inhilation locs
-spike_times=np.loadtxt('spike_times.csv',delimiter=',') # spike times
-track=np.loadtxt('track.csv',delimiter=',')
-
-# Prep values to feed to midi converter
+# %%
+# 3. Prep values to feed to midi converter
 un_lat = []
 # mega_mids
 # scale
@@ -25,15 +39,15 @@ un_lat = []
 #!assign bounds later as desired, for no bounds 0 to locs.max()
 # need to make 2 versions one for sniff and one for spikes 
 beg = 0
-fin=locs.max()+1 #len(locs) 
+fin = locs.max()+1 #len(locs) 
 bounds = [beg,fin]
 
 scale = [2,3,2,2,3] # sets tones to penttonic = not kid on violin
 scale = np.tile(scale,(1,24))
 scale = np.append([1],scale)
-scale = (np.cumsum(scale))
-scale_ind = np.where((scale>24) & (scale<127)) #find indicies between desired range
-scale = scale[scale_ind[0]] #values of scale between desired range, 3/6 used below
+scale = np.cumsum(scale)
+scale_ind = np.where((scale>24) & (scale<127)) # find indicies between desired range
+scale = scale[scale_ind[0]] # values of scale between desired range, 3/6 used below
 
 
 # not useed spikes=spike_times/30
@@ -47,21 +61,52 @@ mega_mids = None
 un_lat = None
 un_pt = 0
 
+# %%
+# 4. Convert sniffs to midi format
+fsniff = np.round(Fs/np.diff(i_locs))
+fsniff = np.concatenate((fsniff,np.array([fsniff[-1]]))) # add lost from diff
+fsniff = np.clip(fsniff, 0, 12) # clip to 0-12 Hz
+
+sniffsec = i_locs/Fs
+midsn = np.ones((len(i_locs), 6)) # array where sniff notes are written
+midsn_tmp = np.concatenate((np.diff(sniffsec),np.array([0.1025]))) # add lost from diff
+
+for mi in range(len(sniffsec)):
+    midsn[mi,2] = fsniff[mi]
+    midsn[mi,3] = 127 # this one is velocity not notes
+    midsn[mi,4] = sniffsec[mi] #-bounds[1]/Fs #removed not used
+    midsn[mi,5] = midsn[mi,4]+midsn_tmp[mi]-0.025 #%Used below 4/6
+
+# %%
+# 5. Write sniffs to midi file
+bpm = 960 # beats per minute
+tempo = np.floor(6e7/bpm)
+ticks_per_quarternote = int(5e3) # 5e3 from Matt
+track = MidiTrack()
+outfile = MidiFile(type=0, ticks_per_beat=ticks_per_quarternote) # type 1 for multiple syncd tracks
+
+outfile.tracks.append(track)
+
+for i in range(midsn.shape[0]): # for each note
+    track.append(Message('note_on', note=int(midsn[i,2]), velocity=int(midsn[i,3]), time=int(midsn[i,4]*ticks_per_quarternote/tempo)))
+    track.append(Message('note_off', note=int(midsn[i,2]), velocity=int(midsn[i,3]), time=int(midsn[i,5]*ticks_per_quarternote/tempo)))
+
+outfile.save('sniff.mid')
+# %%
+# 
+# %%
 for cll in range(len(classic)):
     #this is in the loop
     cl = classic[cll] #cl = cluster unit indicies of interst
     if cl == 0: # prep the sniff
-        i_locs=locs
+        # i_locs = locs # don't need to reassign here so commented out
         #add back in with updated bounds
-        #spikes=spikes(spikes>bounds(1) & spikes<bounds(2)
+        #spikes=spikes[(spikes>bounds[0]) & (spikes<bounds[1])]
         fsniff = np.round(Fs/np.diff(i_locs))
         fsniff = np.concatenate((fsniff,np.array([fsniff[-1]]))) # add lost from diff
-        #add in: fsniff(fsniff>12)=12;
-        for isnf in range(len(fsniff)):
-            if fsniff[isnf] > 12:
-                fsniff[isnf] = 12
+        fsniff = np.clip(fsniff, 0, 12) # clip to 0-12 Hz
 
-        sniffsec=i_locs/Fs
+        sniffsec = i_locs/Fs
         midsn = np.ones((len(i_locs), 6)) # array where sniff notes are written
         midsn_tmp = np.concatenate((np.diff(sniffsec),np.array([0.1025]))) # add lost from diff
        
@@ -124,10 +169,4 @@ for cll in range(len(classic)):
             test = 2
         
 
-test =3
-
-
-
-
-
-
+test = 3
