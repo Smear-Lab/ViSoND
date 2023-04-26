@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io import loadmat
 import math as math
-from mido import Message, MidiFile, MidiTrack
+import mido
 # %%
 # 2. Load data
 vio=0.1
@@ -69,29 +69,43 @@ fsniff = np.clip(fsniff, 0, 12) # clip to 0-12 Hz
 
 sniffsec = i_locs/Fs
 midsn = np.ones((len(i_locs), 6)) # array where sniff notes are written
-midsn_tmp = np.concatenate((np.diff(sniffsec),np.array([0.1025]))) # add lost from diff
+midsn_diff = np.concatenate((np.diff(sniffsec),np.array([0.1025]))) # add lost from diff
 
 for mi in range(len(sniffsec)):
-    midsn[mi,2] = fsniff[mi]
-    midsn[mi,3] = 127 # this one is velocity not notes
-    midsn[mi,4] = sniffsec[mi] #-bounds[1]/Fs #removed not used
-    midsn[mi,5] = midsn[mi,4]+midsn_tmp[mi]-0.025 #%Used below 4/6
+    midsn[mi,2] = fsniff[mi] # note
+    midsn[mi,3] = 127 # velocity
+    midsn[mi,4] = sniffsec[mi] # start time
+    midsn[mi,5] = midsn_diff[mi] # duration
 
 # %%
 # 5. Write sniffs to midi file
-bpm = 960 # beats per minute
-tempo = np.floor(6e7/bpm)
-ticks_per_quarternote = int(5e3) # 5e3 from Matt
-track = MidiTrack()
-outfile = MidiFile(type=0, ticks_per_beat=ticks_per_quarternote) # type 1 for multiple syncd tracks
+velocity = 127
+# bpm = 960 # beats per minute
+ini = 0.025 # internote interval
+tempo = 500000 # defaul or mido.bpm2tempo(bpm) #microseconds per beat
+ticks_per_quarternote = 32767 # max possible # int(5e3) # 5e3 from Matt
+
+track = mido.MidiTrack()
+outfile = mido.MidiFile(type=0, ticks_per_beat=ticks_per_quarternote) # type 1 for multiple syncd tracks
 
 outfile.tracks.append(track)
+# write first note
+# starts at sniffsec[0] 
 
-for i in range(midsn.shape[0]): # for each note
-    track.append(Message('note_on', note=int(midsn[i,2]), velocity=int(midsn[i,3]), time=int(midsn[i,4]*ticks_per_quarternote/tempo)))
-    track.append(Message('note_off', note=int(midsn[i,2]), velocity=int(midsn[i,3]), time=int(midsn[i,5]*ticks_per_quarternote/tempo)))
+note_blank = int(1e6*sniffsec[0]*ticks_per_quarternote/tempo) # blank till first sniff in ticks
+note_duration = int(1e6*(midsn[0,5] - ini)*ticks_per_quarternote/tempo) 
 
-outfile.save('sniff.mid')
+track.append(Message('note_on', note=int(midsn[0,2]), velocity=velocity, time=note_blank)) #start right after last note
+track.append(Message('note_off', note=int(midsn[0,2]), velocity=velocity, time=note_duration))
+
+# write all other notes
+note_blank = int(1e6*ini*ticks_per_quarternote/tempo) # blank space between notes
+for i in range(1, midsn.shape[0]): # for each note
+    note_duration = int(1e6*(midsn[i,5] - ini)*ticks_per_quarternote/tempo) 
+    track.append(Message('note_on', note=int(midsn[i,2]), velocity=velocity, time=note_blank)) #start right after last note
+    track.append(Message('note_off', note=int(midsn[i,2]), velocity=velocity, time=note_duration))
+
+outfile.save('sniff3.mid')
 # %%
 # 
 # %%
