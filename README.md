@@ -30,7 +30,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-ViSoND is a tool designed to enhance observational investigation of simultaneously-acquired behavioral and neurophysiological data. This project follows in the footsteps of the original neurophysiologists, like Lord Adrian, who sonified neural data in order to observe neural activity. Here, we describe a simple method for converting neurophysiological data into a MIDI file that can be listened and examined alongside behavior recordings.
+ViSoND is a tool designed to enhance observational investigation of simultaneously-acquired behavioral and neurophysiological data. This project follows in the footsteps of the original neurophysiologists, like Lord Adrian, who sonified neural data in order to observe neural activity. Here, we describe a simple method for converting neurophysiological data into a MIDI file that can be listened to and examined alongside behavior recordings.
 
 ViSoND allows for the discovery of patterns in data by human observation and represents a captivating method of data presentation.
 
