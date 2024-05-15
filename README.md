@@ -43,7 +43,7 @@ ViSoND allows for the discovery of patterns in data by human observation and rep
 ### Converting neurophysiological data to MIDI
 The code in this (*link? The same one I am using?*) Google Colab notebook (*or in this repo?*) walks through the process for converting kilosorted spiking data or neurophysiological data into MIDI format. (*code needs to be changed so that sniff is more general; How to best explain the process for data that isn't spiking? What is i_locs? What instructions do we need to give to make sure their physiological data is stored this way?*) It also provides the option of uploading your own custom MIDI matrix.
 
-To run, you will simply need you kilosorted data. (*and Phy? Or does that go without saying?*)
+To run, you will simply need your kilosorted data. (*and Phy? Or does that go without saying?*)
 
 ### Combining MIDI and video through VLC media player
 The simplest way to combine MIDI with your video is through VLC, with some added plug-ins.
