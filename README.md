@@ -41,9 +41,12 @@ ViSoND allows for the discovery of patterns in data by human observation and rep
 ## Getting Started
 
 ### Converting neurophysiological data to MIDI
-The code in this (*link? The same one I am using?*) Google Colab notebook (*or in this repo?*) walks through the process for converting kilosorted spiking data or neurophysiological data into MIDI format. (*code needs to be changed so that sniff is more general; How to best explain the process for data that isn't spiking? What is i_locs? What instructions do we need to give to make sure their physiological data is stored this way?*) It also provides the option of uploading your own custom MIDI matrix.
+The code in this Google Colab notebook (link) or the Jupyter Notebook in this repository walks through the process for converting any time series of discrete events into MIDI format. It also provides the option of uploading your own custom MIDI matrix.
 
-To run, you will simply need your kilosorted data. (*and Phy? Or does that go without saying?*)
+For spiking data, you will simply need your data after spike-sorting with Kilosort and Phy.
+For other data types, you will need to make an event file with 2 columns:
+  * The first column specifies the variable that will be matched to a pitch. In spiking data, this would be the neuron identity. Examples of other variables are sniff frequency or gaze shifts
+  * The second column has the event times
 
 ### Combining MIDI and video through VLC media player
 The simplest way to combine MIDI with your video is through VLC, with some added plug-ins.
