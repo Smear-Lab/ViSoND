@@ -67,7 +67,7 @@ To play video with MIDI in VLC:
 * Select your MIDI file
 * Play!
 
-### Combining MIDI with Video for more detailed examination through Ableton Live (currently only functional for MacOS)
+### Combining MIDI with Video for more detailed examination through Ableton Live 
 Install Ableton Live
 * (*instructions for Ableton installation*)
 
