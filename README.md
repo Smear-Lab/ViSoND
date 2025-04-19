@@ -57,7 +57,7 @@ The simplest way to combine MIDI with your video is through VLC, with some added
       * Also download any SoundFont file (try searching for FluidR3_GM.sf2 online)
   * In VLC:
     * Tools>Preferences
-    * Choose the display mode called All, then go to Input/Codecs > Audio codecs > FluidSynth. Then select the .sf2 file with Browse button and save the preferences with Save button.
+    * Choose the display mode called All (bottom left), then go to Input/Codecs > Audio codecs > FluidSynth. Then select the .sf2 file with Browse button and save the preferences with Save button.
 
 To play video with MIDI in VLC:
 * Media>Open Multiple Files
