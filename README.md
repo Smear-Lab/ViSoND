@@ -41,7 +41,7 @@ ViSoND allows for the discovery of patterns in data by human observation and pro
 ## Getting Started
 
 ### Converting neurophysiological data to MIDI
-The code in this Google Colab notebook (link) or the Jupyter Notebook in this repository walks through the process for converting any time series of discrete events into MIDI format. It also provides the option of uploading your own custom MIDI matrix.
+The code in this [Google Colab notebook](https://colab.research.google.com/drive/1aRuu_-V5MDcN1ZE3Fvf4ls56Yp8eTmqK#scrollTo=gjTvZxUfF992) or the Jupyter Notebook in this repository walks through the process for converting any time series of discrete events into MIDI format. It also provides the option of uploading your own custom MIDI matrix.
 
 For spiking data, you will simply need your data after spike-sorting with Kilosort and Phy.
 For other data types, you will need to make an event file with 2 columns:
