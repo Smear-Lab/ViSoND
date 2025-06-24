@@ -69,7 +69,9 @@ To play video with MIDI in VLC:
 
 ### Combining MIDI with Video for more detailed examination through Ableton Live 
 Install Ableton Live
-* (*instructions for Ableton installation*)
+* If you do not already have an Ableton Live license, then create an Ableton Live user account and purchase a license
+* Follow [these instructions](https://help.ableton.com/hc/en-us/articles/209773565-Installing-Ableton-Live) to download Ableton Live
+* Download the [Grand Piano Pack](https://www.ableton.com/en/packs/grand-piano/)
 
 Running MIDI and Video in Ableton Live
 * (*instructions*)
