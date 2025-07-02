@@ -81,6 +81,9 @@ Running MIDI and Video in Ableton Live
 * Drag and drop your MIDI files and your video into the template at time 0.00.
 
   <img src="https://github.com/Smear-Lab/ViSoND/blob/main/Ableton_template.gif" width="700">
+* Play!
+* Navigation tools:
+  * Move forward in time by dragging the time bar forward
 * Extra capabilities and how to use them (*instructions, maybe a demo gif?*)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
