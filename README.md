@@ -49,15 +49,18 @@ For other data types, you will need to make an event file with 2 columns:
   * The second column has the event times
 
 ### Combining MIDI and video through VLC media player
-The simplest way to combine MIDI with your video is through VLC, with some added plug-ins.
+The simplest way to combine MIDI with your video is through VLC, with an audio codec for MIDI files and and a SoundFont file.
   * Install [VLC](https://www.videolan.org/)
-  * Install [choclatey](https://chocolatey.org/install) via powershell (Run as admin)
-    * use choclatey to install [fluidsynth](https://github.com/FluidSynth/fluidsynth/wiki/Download)
-      * Fluidsynth is audio codec needed to run midi files in VLC
-      * Also download any SoundFont file (try searching for FluidR3_GM.sf2 online)
-  * In VLC:
-    * Tools>Preferences
-    * Choose the display mode called All (bottom left), then go to Input/Codecs > Audio codecs > FluidSynth. Then select the .sf2 file with Browse button and save the preferences with Save button.
+  * Make sure that your VLC installation has an audio codec that can process MIDI files
+    * In VLC, go to Tools>Preferences
+    * Choose the display mode called All (bottom left), then go to Input/Codecs > Audio codecs
+    * If you see an audio codec called AUMIDI (Mac only) or Fluidsynth (any OS), proceed to next step. If you do not see one of these, install [fluidsynth](https://github.com/FluidSynth/fluidsynth/wiki/Download).
+      * If you are on PC, you may need to first install [choclatey](https://chocolatey.org/install) via powershell (Run as admin)
+  * Download any SoundFont file (.sf2). A popular choice is [FluidR3_GM](https://member.keymusician.com/Member/FluidR3_GM/index.html).
+  * Upload that file to your audio codec.
+    * Follow the same instructions listed above to access your audio codecs in VLC.
+    * Select your MIDI codec (AUMIDI or Fluidsynth) and choose your SoundFont file. 
+
 
 To play video with MIDI in VLC:
 * Media>Open Multiple Files
@@ -74,7 +77,8 @@ Install Ableton Live
 * Download the [Grand Piano Pack](https://www.ableton.com/en/packs/grand-piano/)
 
 Running MIDI and Video in Ableton Live
-* (*instructions*)
+* Open the ViSoND Ableton Live template with Ableton Live.
+* Drag and drop your MIDI files and your video into the template at time 0.00.
 * Extra capabilities and how to use them (*instructions, maybe a demo gif?*)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
