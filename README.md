@@ -84,14 +84,16 @@ Running MIDI and Video in Ableton Live
 * Play!
 * Navigation tools:
   * Move forward in time by dragging the time bar forward
-* Extra capabilities and how to use them (*instructions, maybe a demo gif?*)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LICENSE -->
 ## License
 
-(*License info?*)
+ViSoND is licensed under an [MIT license](https://github.com/Smear-Lab/ViSoND/blob/main/License.txt). Note that the code is provided 'as is', without warranty of any kind, express or implied.
+
+Please cite us!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -100,17 +102,8 @@ Running MIDI and Video in Ableton Live
 <!-- CONTACT -->
 ## Contact
 
-(*contact info*)
+smear@uoregon.edu
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
