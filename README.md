@@ -2,6 +2,7 @@
 
   <p align="center">
     Visualizing and Sonifying Neural Data
+    <a href="https://www.biorxiv.org/content/10.64898/2026.03.21.713430v1.full.pdf">Preprint</a>
 
 <!-- TABLE OF CONTENTS -->
 <details>
